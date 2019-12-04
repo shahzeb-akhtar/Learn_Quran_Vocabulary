@@ -338,6 +338,7 @@ function resetWidths(){
 		if(vizDivW < 350){
 			vizDivW = 350;
 		}
+		alert(vizDivH + ", " + vizDivW);
 		treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
 		tree.size([2*Math.PI, treeRadius]);
 		ySB.range([0, treeRadius]);
