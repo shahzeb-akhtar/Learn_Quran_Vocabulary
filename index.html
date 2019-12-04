@@ -1,93 +1,7 @@
 <html>
 	<head>
 		<title>Quran Vocabulary</title>
-		<style>
-			body{
-				font-family:"Helvetica";
-			}
-			
-			#tooltip{
-				position:absolute;
-				top:-1000px;
-				left:-1000px;
-				background:#f2f2f2;
-				z-index:+3;
-				padding:5px;
-				border-radius:10px;
-				max-width:300px;				
-			}
-			#more_options{
-				position:absolute;
-				top:-1000px;
-				left:-1000px;
-				background:#f2f2f2;
-				z-index:+3;
-				padding:5px;
-				border-radius:10px;
-				width:200px;
-			}
-			#ayahs_div{
-				position:absolute;
-				top:-10000px;
-				left:-10000px;
-				background:white;
-				z-index:+2;
-				border-radius:5px;			
-			}
-			
-			.word_part_header{
-				background-color: black;
-				color: white;
-				text-align:center;
-				font-size:13px;
-				font-family:Helvetica;
-			}
-			
-			.help_text{
-				color: red;
-				font-size:13px;
-				font-family:Helvetica;
-				text-align: justify;
-			}
-			
-			.word_part_td{
-				vertical-align:middle;
-				height:90px;
-			}
-			
-			.in_page_link{
-				text-align:right;
-				margin-top:2px;
-				margin-bottom:-20px;
-			}
-			
-			.data_source{
-				padding-left:10px;
-				margin-top:5px;
-				margin-bottom:5px;
-			}
-			.big_box_div{
-				width:100%;
-				height:100%
-			}
-			.main-arc {
-				stroke: #fff;
-				stroke-width: 0.5px;
-			}
-			
-			.hidden-arc {
-				fill: none;
-			}
-			
-			.noselect {
-			  -webkit-touch-callout: none; /* iOS Safari */
-				-webkit-user-select: none; /* Safari */
-				 -khtml-user-select: none; /* Konqueror HTML */
-				   -moz-user-select: none; /* Firefox */
-					-ms-user-select: none; /* Internet Explorer/Edge */
-						user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-			}	
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<meta charset="UTF-8">
 	</head>
 	<body>
@@ -112,10 +26,11 @@
 			<div id="ayahs_inner_div" style="overflow:auto; padding-left:10px; padding-right:10px;"></div>
 		</div>
 		<div class="big_box_div">
-			<div id="page_top"></div>
-			<p class="in_page_link"><a href="#help_video_div">Help Video</a><span> | </span><a href="#disclaimer_div">Disclaimer</a></p>
-			<h2 align="center" style="margin-bottom:2px; margin-top:10px">Learn Quran Vocabulary</h2>
-			<div align="center" id="top_div"></div>
+			<div align="center" id="top_div">
+				<div id="page_top"></div>
+				<p class="in_page_link"><a href="#help_video_div">Help Video</a><span> | </span><a href="#disclaimer_div">Disclaimer</a></p>
+				<h2 align="center" style="margin-bottom:2px; margin-top:10px">Learn Quran Vocabulary</h2>
+			</div>
 			<table>
 				<tbody>		
 					<tr>
@@ -166,12 +81,12 @@
 				</tbody>
 			</table>
 		</div>
-		<script src="data/wordParts.js"></script>
+		<script src="data/wordparts.js"></script>
 		<script src="data/words.js"></script>
 		<script src="data/pauseMarks.js"></script>
 		<script src="data/surahInfo.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script src="js/quran_vocab.js"></script>
+		<script src="js/quran-vocab.js"></script>
 		<script src="data/rootMeaning.js"></script>
 		<script src="data/noRootMeaning.js"></script>
 	</body>
