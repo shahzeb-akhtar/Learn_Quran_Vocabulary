@@ -331,8 +331,8 @@ function resetWidths(){
 		w = window.visualViewport.width;
 		vizDivW = w*0.73;
 		detailDivW = w*0.20;
-		vizDivH = h - 110;
-		if(vizDivH < 0){
+		vizDivH = (h - topDiv.node().clientHeight) * 0.95;
+		if(vizDivH < 200){
 			vizDivH = 200;
 		}
 		if(vizDivW < 350){
