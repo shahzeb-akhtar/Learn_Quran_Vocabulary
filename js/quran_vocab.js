@@ -27,6 +27,9 @@ const colors10 = d3.schemeCategory10,
 		formatNumber = d3.format(",d");
 
 const topDiv = d3.select("#top_div"),
+	mainDiv = d3.select("#main_div"),
+	helpDiv = d3.select("#help_div"),
+	disclaimerAndFooterDiv = d3.select("#disclaimer_and_footer_div"),
 	wordDetailsTable = d3.select("#word_details_table"),
 	detailsDiv = d3.select("#details_div"),
 	userHelpP = d3.select("#user_help_text")
@@ -1745,4 +1748,21 @@ function wordMouseOut(){
 	//return;
 	d3.select(this).style("background-color",null);
 	moreDetailsDiv.selectAll("*").remove();
+}
+
+function showMain(){
+	helpDiv.style("display", "none");
+	disclaimerAndFooterDiv.style("display", "none");
+	mainDiv.style("display", null);
+	
+}
+
+function showHelp(){
+	mainDiv.style("display", "none");
+	helpDiv.style("display", null);
+}
+
+function showDisclaimer(){
+	mainDiv.style("display", "none");
+	disclaimerAndFooterDiv.style("display", null);	
 }
