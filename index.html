@@ -26,10 +26,10 @@
 			</div>
 			<div id="ayahs_inner_div" style="overflow:auto; padding-left:10px; padding-right:10px;"></div>
 		</div>
-		<div class="big_box_div">
+		<div class="big_box_div" id="main_div">
 			<div align="center" id="top_div">
 				<div id="page_top"></div>
-				<p class="in_page_link"><a href="#help_video_div">Help Video</a><span> | </span><a href="#disclaimer_div">Disclaimer</a></p>
+				<p class="in_page_link"><a href="#" onclick="showHelp(); return false;">Help Video</a><span> | </span><a href="#" onclick="showDisclaimer(); return false;">Disclaimer</a></p>
 				<h2 align="center" style="margin-bottom:2px; margin-top:10px">Learn Quran Vocabulary</h2>
 			</div>
 			<table>
@@ -52,15 +52,15 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="big_box_div" id="help_video_div">
-			<p style="text-align:right;"><a href="#page_top">Go up</a></p>
+		<div class="big_box_div" id="help_div" style="display:none;">
+			<p style="text-align:right;"><a href="#" onclick="showMain(); return false;">Back</a></p>
 			<h3>How to use this extenstion?</h3>
 			<p>Watch the video below to understand the features of this extension and how to use them</p>
 			<iframe width="100%" height="70%" src="https://www.youtube.com/embed/5mgzwQ0c8dc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
-		<div class="big_box_div">
-			<div id="disclaimer_div">
-				<p style="text-align:right;"><a href="#page_top">Go up</a></p>
+		<div class="big_box_div" id="disclaimer_and_footer_div" style="display:none;">
+			<div class="big_box_div" id="disclaimer_div">
+				<p style="text-align:right;"><a href="#" onclick="showMain(); return false;">Back</a></p>
 				<h4>Disclaimer</h4>
 				<p>Below are sources of the data used in this page. Further processing has been done to use the data in an interactive manner.</p>
 				<p class="data_source">Arabic text has been downloaded from <a target="_blank" rel="noopener noreferrer" href="http://tanzil.net/docs/download">Tanzil</a>.</p>
@@ -71,16 +71,16 @@
 				<p class="data_source"><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Arabic_grammar">Wikipedia</a></p>
 				<p class="data_source"><a target="_blank" rel="noopener noreferrer" href="https://en.wiktionary.org/wiki/Category:Arabic_roots">Wiktionary</a></p>
 			</div>
-		</div>
-		<div id="footer" style="margin-top:-25px;">
-			<table width="100%">
-				<tbody>
-					<tr>
-						<td width="50%" style="text-align:left;"></td>
-						<td width="50%" style="text-align:right;"><p>&copy; Shahzeb Akhtar<p></td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="footer" style="margin-top:-25px;">
+				<table width="100%">
+					<tbody>
+						<tr>
+							<td width="50%" style="text-align:left;"></td>
+							<td width="50%" style="text-align:right;"><p>&copy; Shahzeb Akhtar<p></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<script src="data/wordParts.js"></script>
 		<script src="data/words.js"></script>
