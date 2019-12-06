@@ -332,21 +332,22 @@ window.onresize = function(){
 function resetWidths(){
 	let h = window.visualViewport.height,
 		w = window.visualViewport.width;
-		vizDivW = w*0.73;
-		detailDivW = w*0.20;
-		vizDivH = (h - topDiv.node().clientHeight) * 0.95;
-		if(vizDivH < 200){
-			vizDivH = 200;
-		}
-		if(vizDivW < 350){
-			vizDivW = 350;
-		}
-		treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
-		tree.size([2*Math.PI, treeRadius]);
-		ySB.range([0, treeRadius]);
-		ayahsAndVisualsDiv.style("width", vizDivW).style("max-height", vizDivH).style("height", vizDivH).style("overflow", "auto");
-		detailsDiv.style("width", detailDivW).style("height", vizDivH);
-		moreDetailsDiv.style("max-height", vizDivH).style("overflow", "auto");
+	vizDivW = w*0.73;
+	detailDivW = w*0.20;
+	vizDivH = (h - topDiv.node().clientHeight) * 0.95;
+	if(vizDivH < 200){
+		vizDivH = 200;
+	}
+	if(vizDivW < 350){
+		vizDivW = 350;
+	}
+	treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
+	tree.size([2*Math.PI, treeRadius]);
+	ySB.range([0, treeRadius]);
+	ayahsAndVisualsDiv.style("width", vizDivW).style("max-height", vizDivH).style("height", vizDivH).style("overflow", "auto");
+	topDiv.style("width", w);
+	detailsDiv.style("width", detailDivW).style("height", vizDivH);
+	moreDetailsDiv.style("max-height", vizDivH).style("overflow", "auto");
 }
 
 function understandWords(){
