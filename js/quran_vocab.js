@@ -1644,6 +1644,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function touchWordClick(d){
+	d3.event.preventDefault();
 	if(!lastTouchClickD){
 		wordMouseOver(d);
 	}else{
