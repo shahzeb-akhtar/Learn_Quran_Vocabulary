@@ -1646,10 +1646,12 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 function touchWordClick(d){
 	d3.event.preventDefault();
 	if(!lastTouchClickD){
+		alert("word mouse over");
 		wordMouseOver(d);
 	}else{
 		let currTime = new Date();
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
+			alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
 			wordClick(d);
 		}else{
 			wordMouseOver(d);
