@@ -1278,6 +1278,7 @@ function rectMOut(d){
 }
 
 function _rectMOver(d){
+	alert(disableRectMOver);
 	if(disableRectMOver) return;
 	moreDetailsDiv.selectAll("*").remove();
 	if(d.type === "root_root"){
