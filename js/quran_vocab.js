@@ -1145,6 +1145,7 @@ function clickSBTouch(d){
 function clickSB(d){
 	wordDiv.selectAll("*").remove();
 	moreDetailsDiv.selectAll("*").remove();
+	rootsSvg.selectAll("*").remove();
 	goodNodes = [];
 	if(d.parent !== null){
 		goodNodes.push(d.parent.data.data.name);
@@ -1164,9 +1165,14 @@ function clickSB(d){
 				});
 			}
 		});
-		createSB(d);
+		setTimeout(function(){
+			createSB(d);
+		}, 5);
+		
 	}else{
-		rootLemmaClicked(d.data.data.name, true);
+		setTimeout(function(){
+			rootLemmaClicked(d.data.data.name, true);
+		}, 5);
 	}
 }
 
