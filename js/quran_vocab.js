@@ -1333,7 +1333,6 @@ function _rectMOver(d){
 		alert(d.value);
 		let newSvg = moreDetailsDiv.append("svg").attr("width", detailDivW - 25); // to allow for scroll bar
 		d3.selectAll(".no_root_type").style("opacity", function(dIn){
-			alert(dIn.value);
 			if(dIn.value === d.value){
 				return 1;
 			}else{
@@ -1414,6 +1413,7 @@ function getMeaningHtml(meaning, size){
 }
 
 function _rectMOut(){
+	alert("rect move out");
 	if(disableRectMOver) return;
 	d3.selectAll(".root_root").style("opacity", 1);
 	d3.selectAll(".no_root_type").style("opacity", 1);
