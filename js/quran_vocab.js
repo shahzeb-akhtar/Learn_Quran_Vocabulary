@@ -1218,8 +1218,10 @@ function rootLemmaClicked(l, changeViewType){
 }
 
 function moreDetailDivMOver(){
-	disableSbMOver = true;
-	disableRectMOver = true;	
+	if(!isMobile){
+		disableSbMOver = true;
+		disableRectMOver = true;
+	}
 }
 
 function moreDetailDivMOut(){
@@ -1404,6 +1406,7 @@ function _rectMOut(){
 
 function sbMOver(d){
 	if(disableSbMOver) return;
+	wordDiv.selectAll("*").remove();
 	moreDetailsDiv.selectAll("*").remove();
 	if(d.depth > 0 && d.depth < 3){
 		wordDiv.selectAll("*").remove();
