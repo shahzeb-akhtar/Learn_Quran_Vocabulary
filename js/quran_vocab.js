@@ -1502,6 +1502,9 @@ function appendText(textElem, textObj){
 
 function appendSpan(sElem, sObj){
 	let ss = sElem.append("span");
+	if(sObj.id){
+		ss.attr("id", "span_" + sObj.id);
+	}
 	if(sObj.html){
 		ss.html(sObj.html);
 	}
@@ -1607,9 +1610,9 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 	appendSpan(pEnglish, {"html":" "});
 	for(zz = 1; zz <= ayahWordNumsObj[obj.a]; zz++){
 		if(isMobile){
-			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "click":wordClickTouch});
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "id":obj.a+"-"+zz,"datum":obj.a+"-"+zz, "click":wordClickTouch});
 		}else{
-			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "id":obj.a+"-"+zz, "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
 		}
 		
 		if(typeof pauseMarksObj[obj.a+"-"+zz] != "undefined"){
@@ -1646,12 +1649,12 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 function wordClickTouch(d){
 	d3.event.preventDefault();
 	if(!lastTouchClickD){
-		alert("calling word mouse over");
+		//alert("calling word mouse over");
 		wordMouseOver(d);
 	}else{
 		let currTime = new Date();
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
-			alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
+			//alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
 			wordClick(d);
 		}else{
 			wordMouseOver(d);
@@ -1694,9 +1697,8 @@ function pauseMouseOut(){
 
 function wordMouseOver(d){
 	moreDetailsDiv.selectAll("*").remove();
-	alert("wordMouseOver");
-	alert(this);
-	d3.select(this).style("background-color","yellow");
+	//alert("wordMouseOver");
+	d3.select("#span_" + d).style("background-color","yellow");
 		
 	if(words[d][WORD_ARABIC_ROOT] != ""){
 		appendP(moreDetailsDiv, {"marginBottom":2, "marginTop":2, "html":"ROOT:", "size":moreDetailsLabelSize});
