@@ -31,19 +31,12 @@ body{
 	border-radius:5px;			
 }
 
-.word_part_header{
-	background-color: black;
-	color: white;
-	text-align:center;
-	font-size:13px;
-	font-family:Helvetica;
-}
-
-.help_text{
-	color: red;
-	font-size:13px;
-	font-family:Helvetica;
-	text-align: justify;
+#word_div{
+	position:absolute;
+	top:-10000px;
+	left:-10000px;
+	z-index:+2;
+	border-radius:5px;			
 }
 
 .word_part_td{
