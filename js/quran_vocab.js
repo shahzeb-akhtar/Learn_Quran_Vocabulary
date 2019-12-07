@@ -1694,6 +1694,7 @@ function pauseMouseOut(){
 
 function wordMouseOver(d){
 	moreDetailsDiv.selectAll("*").remove();
+	alert(this);
 	d3.select(this).style("background-color","yellow");
 		
 	if(words[d][WORD_ARABIC_ROOT] != ""){
