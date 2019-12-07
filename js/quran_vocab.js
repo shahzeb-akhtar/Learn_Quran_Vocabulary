@@ -207,6 +207,8 @@ let wordPartKeys = d3.keys(wordParts),
 	selectedTopChoice = "",
 	selectedAlphabet,
 	rootsHeirar = [{"name":"All Roots","parent":"", "size":0, "start":""}],
+	lastTouchClickTime,
+	lastTouchClickD,
 	viewType; // possibilities - surah_viz, surah_ayahs, root_viz, root_ayahs, no_root_viz, no_root_ayahs
 
 const partition = d3.partition();
@@ -1642,7 +1644,18 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function touchWordClick(d){
-	alert(d);
+	if(!lastTouchClickD){
+		wordMouseOver(d);
+	}else{
+		let currTime = new Date();
+		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
+			wordClick(d);
+		}else{
+			wordMouseOver(d);
+		}
+	}
+	lastTouchClickD = d;
+	lastTouchClickTime = new Date();
 }
 
 function wordClick(d){
