@@ -737,22 +737,7 @@ function prepareAyahsDiv(){
 }
 
 function surahClickedTouch(d){
-	d3.event.preventDefault();
-	d3.event.stopPropagation();
-	if(!lastTouchClickD){
-		//alert("calling word mouse over");
-		surahMouseOver(d);
-	}else{
-		let currTime = new Date();
-		
-		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
-			surahClicked(d);
-		}else{
-			surahMouseOver(d);
-		}
-	}
-	lastTouchClickD = d;
-	lastTouchClickTime = new Date();
+	
 }
 function surahClicked(s){
 	moreDetailsDiv.selectAll("*").remove();
@@ -842,9 +827,7 @@ function createNoRootViz(){
 							
 		if(isMobile){
 			gg.on("touchend", function(d){
-				d3.event.preventDefault();
-				d3.event.stopPropagation();
-				_rectMOver(d);
+				touchEventHandler(d, _rectMOver);
 			});
 		}else{
 			gg.on("mouseenter", rectMOver)
@@ -878,15 +861,42 @@ function createNoRootViz(){
 		let gg = rootsNoSvg.append("g")
 							.attr("transform", "translate(" + ( vizDivW - ((i % lemmaRectInARow + 1) * lemmaRectWidth)) + "," + (50 + (Math.floor(i/lemmaRectInARow) * lemmaRectHeight)) + ")")
 							.attr("class", "no_root_lemma")
-							.datum({"type":"no_root_lemma", "value":l})
-							.on("click", rectClicked)
-							.on("mouseenter", rectMOver)
-							.on("mouseleave", rectMOut);
+							.datum({"type":"no_root_lemma", "value":l});
+							
+							
+		if(isMobile){
+			gg.on("touchend", function(d){
+				touchEventHandler(d, _rectMOver, rectClicked);
+			});
+		}else{
+			gg.on("click", rectClicked)
+				.on("mouseenter", rectMOver)
+				.on("mouseleave", rectMOut);
+		}
 		appendRect(gg, {"width":0.95 * lemmaRectWidth, "height":0.95 * lemmaRectHeight, "rx":0.05 * lemmaRectWidth, "fill":rectFill });
 		appendText(gg, {"x":lemmaRectWidth * 0.5 * 0.95, "y":lemmaRectHeight * 0.7 * 0.95, "text":l, "class":"noselect", "fill":textFill, "anchor":"middle", "size":Math.floor(lemmaRectWidth/3)});
 	});
 	
 	createColorLegend(rootsNoSvg);
+}
+
+function touchEventHandler(d, MOverHandler, MClickHandler){
+	d3.event.preventDefault();
+	d3.event.stopPropagation();
+	if(!lastTouchClickD || !MClickHandler){
+		//alert("calling word mouse over");
+		MOverHandler(d);
+	}else{
+		let currTime = new Date();
+		
+		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
+			MClickHandler(d);
+		}else{
+			MOverHandler(d);
+		}
+	}
+	lastTouchClickD = d;
+	lastTouchClickTime = new Date();
 }
 
 function prepareRootViz(){
@@ -948,6 +958,9 @@ function createRootsHeatMap(){
 	selectedAlphabet = arabicAlphabets[0];
 	let allAlphabetsG = rootsSvg.append("g")
 								.attr("id", "outer_g");
+	if(isMobile){
+		rootsSvg.on("touchend", _rectMOut);
+	}
 	arabicAlphabets.forEach(function(a, i){
 		let tt, tSpan, rectFill, textFill;
 		let gg = rootsSvg.append("g")
@@ -989,8 +1002,15 @@ function createRootsHeatMap(){
 								.attr("transform", "translate(" + ( vizDivW - ((colIterator + 1) * rootRectWidth)) + "," + (rowIterator * rootRectHeight) + ")")
 								.attr("class", "root_root root_root_" + a)
 								.datum({"type":"root_root", "value":r, "root_value":r, "alphabet":a})
-								.on("mouseenter", rootRectMOver)
-								.on("mouseleave", rootRectMOut);
+								
+			if(isMobile){
+				gg.on("touchend", function(){
+					touchEventHandler(d, _rectMOver);
+				})
+			}else{
+				gg.on("mouseenter", rootRectMOver)
+					.on("mouseleave", rootRectMOut);
+			}
 			appendRect(gg, {"width":0.9 * rootRectWidth, "height":0.8 * rootRectHeight, "rx":0.05 * rootRectWidth, "fill":rectFill });
 			appendText(gg, {"x":rootRectWidth * 0.5 * 0.9, "y":rootRectHeight * 0.7 * 0.8, "text":r, "class":"noselect", "fill":textFill, "anchor":"middle", "size":Math.floor(rootRectWidth/3), "weight":"bold", "stretch":"ultra-condensed"});
 			
@@ -999,10 +1019,17 @@ function createRootsHeatMap(){
 				gg = alphabetWordsG.append("g")
 								.attr("transform", "translate(" + ( vizDivW - ((colIterator + 2 + Math.floor(ri/2)) * rootRectWidth)) + "," + ((rowIterator + ((ri % 2) * 0.5)) * rootRectHeight) + ")")
 								.attr("class", "root_root root_root_" + a)
-								.datum({"type":"root_word", "value":rl, "root_value":r, "alphabet":a})
-								.on("mouseenter", rootRectMOver)
-								.on("mouseleave", rootRectMOut)
-								.on("click", rectClicked);
+								.datum({"type":"root_word", "value":rl, "root_value":r, "alphabet":a});
+								
+			if(isMobile){
+				gg.on("touchend", function(d){
+					touchEventHandler(d, _rectMOver, rectClicked);
+				});
+			}else{
+				gg.on("mouseenter", rootRectMOver)
+					.on("mouseleave", rootRectMOut)
+					.on("click", rectClicked);
+			}
 			appendRect(gg, {"width":0.9 * rootRectWidth, "height":0.4 * rootRectHeight, "rx":0.025 * rootRectWidth, "fill":rectFill });
 			appendText(gg, {"x":rootRectWidth * 0.8, "y": rootRectHeight * 0.35 * 0.8, "text":rl, "class":"noselect", "fill":textFill, "anchor":"end", "size":Math.floor(rootRectWidth/5)});
 			});
@@ -1137,20 +1164,7 @@ function createSB(d){
 }
 
 function clickSBTouch(d){
-	d3.event.preventDefault();
-	d3.event.stopPropagation();
-	if(!lastTouchClickD){
-		sbMOver(d);
-	}else{
-		let currTime = new Date();
-		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
-			clickSB(d);
-		}else{
-			sbMOver(d);
-		}
-	}
-	lastTouchClickD = d;
-	lastTouchClickTime = new Date();
+	touchEventHandler(d, sbMOver, clickSB);
 }
 
 function clickSB(d){
@@ -1721,21 +1735,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function wordClickTouch(d){
-	d3.event.preventDefault();
-	d3.event.stopPropagation();
-	ayahsInnerDiv.selectAll("span").style("background-color",null);
-	if(!lastTouchClickD){
-		wordMouseOver(d);
-	}else{
-		let currTime = new Date();
-		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
-			wordClick(d);
-		}else{
-			wordMouseOver(d);
-		}
-	}
-	lastTouchClickD = d;
-	lastTouchClickTime = new Date();
+	touchEventHandler(d, wordMouseOver, wordClick);
 }
 
 function wordClick(d){
