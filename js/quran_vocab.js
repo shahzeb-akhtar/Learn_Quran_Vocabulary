@@ -1607,7 +1607,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 	appendSpan(pEnglish, {"html":" "});
 	for(zz = 1; zz <= ayahWordNumsObj[obj.a]; zz++){
 		if(isMobile){
-			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "click":touchWordClick});
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "touchstart":touchStartWord});
 		}else{
 			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
 		}
@@ -1643,7 +1643,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 	}			
 }
 
-function touchWordClick(d){
+function touchStartWord(d){
 	d3.event.preventDefault();
 	if(!lastTouchClickD){
 		alert("word mouse over");
