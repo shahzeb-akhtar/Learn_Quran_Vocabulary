@@ -829,16 +829,22 @@ function createNoRootViz(){
 		lemmaRectHeight = Math.sqrt(lemmaRectArea) * 0.6,
 		typeRectInARow = Math.floor((vizDivW/2)/typeRectWidth),
 		lemmaRectInARow = Math.floor((vizDivW/2)/lemmaRectWidth);
-	
+	if(isMobile){
+		rootsNoSvg.on("touchend", _rectMOut);
+	}
 	types.sort().forEach(function(t, i){
 		let tt, tSpan, rectFill, textFill;
 		let gg = rootsNoSvg.append("g")
 							.attr("transform", "translate(" + ((i % typeRectInARow) * typeRectWidth) + "," + (50 + (Math.floor(i/typeRectInARow) * typeRectHeight)) + ")")
 							.attr("class", "no_root_type")
 							.datum({"type":"no_root_type", "value":t})
-							.on("mouseenter", rectMOver)
-							.on("mouseleave", rectMOut);
 							
+		if(isMobile){
+			gg.on("touchend", _rectMOver);
+		}else{
+			gg.on("mouseenter", rectMOver)
+				.on("mouseleave", rectMOut);
+		}				
 		[rectFill, textFill] = getRectAndTextColor(noRootTypeCount[t]);			
 		appendRect(gg, {"width":0.95 * typeRectWidth, "height":0.95 * typeRectHeight, "rx":0.05 * typeRectWidth, "fill":rectFill});
 		let textArr = wordPartsInfoObj[t].split(" ");
