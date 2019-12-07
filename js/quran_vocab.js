@@ -1047,7 +1047,7 @@ function createSB(d){
 						.attr("class", "slice")
 						
 		if(isMobile){
-			pathG.on("touchend", clickSB)
+			pathG.on("touchend", clickSBTouch)
 		}else{
 			pathG.on("click", clickSB)
 				.on("mouseover", function(d){setTimeout(sbMOver, 500, d);})
@@ -1132,7 +1132,6 @@ function clickSBTouch(d){
 		sbMOver(d);
 	}else{
 		let currTime = new Date();
-		
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
 			clickSB(d);
 		}else{
