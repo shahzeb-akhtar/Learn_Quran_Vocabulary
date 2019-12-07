@@ -688,7 +688,8 @@ function closeAyahsDiv(){
 	}
 	ayahsInnerDiv.selectAll("*").remove();
 	ayahsDiv.style("left","-10000px")
-			.style("top","-10000px")
+			.style("top","-10000px");
+	moreDetailsDiv.selectAll("*").remove();
 }
 
 // from : https://stackoverflow.com/questions/1350581/how-to-get-an-elements-top-position-relative-to-the-browsers-viewport/1350681#1350681
