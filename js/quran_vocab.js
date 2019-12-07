@@ -738,6 +738,7 @@ function prepareAyahsDiv(){
 
 function surahClickedTouch(d){
 	d3.event.preventDefault();
+	d3.event.stopPropagation();
 	if(!lastTouchClickD){
 		//alert("calling word mouse over");
 		surahMouseOver(d);
@@ -842,6 +843,7 @@ function createNoRootViz(){
 		if(isMobile){
 			gg.on("touchend", function(d){
 				d3.event.preventDefault();
+				d3.event.stopPropagation();
 				_rectMOver(d);
 			});
 		}else{
@@ -1136,8 +1138,8 @@ function createSB(d){
 
 function clickSBTouch(d){
 	d3.event.preventDefault();
+	d3.event.stopPropagation();
 	if(!lastTouchClickD){
-		//alert("calling word mouse over");
 		sbMOver(d);
 	}else{
 		let currTime = new Date();
@@ -1330,7 +1332,6 @@ function _rectMOver(d){
 		});
 	}
 	if(d.type === "no_root_type"){
-		alert(d.value);
 		let newSvg = moreDetailsDiv.append("svg").attr("width", detailDivW - 25); // to allow for scroll bar
 		d3.selectAll(".no_root_type").style("opacity", function(dIn){
 			if(dIn.value === d.value){
@@ -1413,7 +1414,6 @@ function getMeaningHtml(meaning, size){
 }
 
 function _rectMOut(){
-	alert("rect move out");
 	if(disableRectMOver) return;
 	d3.selectAll(".root_root").style("opacity", 1);
 	d3.selectAll(".no_root_type").style("opacity", 1);
@@ -1722,6 +1722,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 
 function wordClickTouch(d){
 	d3.event.preventDefault();
+	d3.event.stopPropagation();
 	ayahsInnerDiv.selectAll("span").style("background-color",null);
 	if(!lastTouchClickD){
 		wordMouseOver(d);
