@@ -625,7 +625,7 @@ function prepareSurahsViz(){
 		appendText(gg, {"x":125, "class":"noselect", "anchor":"middle", "size":SURAHS_TABLE_TEXT_SIZE, "text":ss[SURAH_INFO_BOOK_ORDER]});
 		appendText(gg, {"x":200, "class":"noselect", "anchor":"middle", "size":SURAHS_TABLE_TEXT_SIZE, "text":ss[SURAH_INFO_REVEL_ORDER]});
 		if(isMobile){
-			appendRect(gg, {"x":250, "y":-10, "height":15, "width":(scaleWidth(ss[SURAH_INFO_AYAH_NUM]) - scaleWidth(0)), "fill":(ss[SURAH_INFO_TYPE] == "Meccan" ? meccanColor : medinaColor), "datum":ss[SURAH_INFO_BOOK_ORDER].toString(), "click":surahClickedTouch});
+			appendRect(gg, {"x":250, "y":-10, "height":15, "width":(scaleWidth(ss[SURAH_INFO_AYAH_NUM]) - scaleWidth(0)), "fill":(ss[SURAH_INFO_TYPE] == "Meccan" ? meccanColor : medinaColor), "datum":ss[SURAH_INFO_BOOK_ORDER].toString(), "touchend":surahClickedTouch});
 		}else{
 			appendRect(gg, {"x":250, "y":-10, "height":15, "width":(scaleWidth(ss[SURAH_INFO_AYAH_NUM]) - scaleWidth(0)), "fill":(ss[SURAH_INFO_TYPE] == "Meccan" ? meccanColor : medinaColor), "datum":ss[SURAH_INFO_BOOK_ORDER].toString(), "click":surahClicked, "mouseover":surahMouseOver, "mouseout":surahMouseOut});
 		}
@@ -737,12 +737,13 @@ function prepareAyahsDiv(){
 }
 
 function surahClickedTouch(d){
-	//d3.event.preventDefault();
+	d3.event.preventDefault();
 	if(!lastTouchClickD){
 		//alert("calling word mouse over");
 		surahMouseOver(d);
 	}else{
 		let currTime = new Date();
+		alert(currTime - lastTouchClickTime);
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
 			//alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
 			surahClicked(d);
@@ -1468,6 +1469,9 @@ function appendRect(rectElem, rectObj){
 	if(rectObj.mouseout){
 		rr.on("mouseout", rectObj.mouseout);
 	}
+	if(rectObj.touchend){
+		rr.on("touchend", rectObj.touchend);
+	}
 	return rr;
 }
 
@@ -1553,6 +1557,10 @@ function appendSpan(sElem, sObj){
 	if(sObj.click){
 		ss.on("click", sObj.click);
 	}
+	if(sObj.touchend){
+		ss.on("touchend", sObj.touchend);
+	}
+	
 	return ss;
 }
 
@@ -1634,7 +1642,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 	appendSpan(pEnglish, {"html":" "});
 	for(zz = 1; zz <= ayahWordNumsObj[obj.a]; zz++){
 		if(isMobile){
-			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "id":obj.a+"-"+zz,"datum":obj.a+"-"+zz, "click":wordClickTouch});
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "id":obj.a+"-"+zz,"datum":obj.a+"-"+zz, "touchend":wordClickTouch});
 		}else{
 			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "id":obj.a+"-"+zz, "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
 		}
@@ -1671,7 +1679,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function wordClickTouch(d){
-	//d3.event.preventDefault();
+	d3.event.preventDefault();
 	ayahsInnerDiv.selectAll("span").style("background-color",null);
 	if(!lastTouchClickD){
 		//alert("calling word mouse over");
