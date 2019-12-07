@@ -348,7 +348,7 @@ function resetWidths(){
 		treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
 		tree.size([2*Math.PI, treeRadius]);
 		ySB.range([0, treeRadius]);
-		topDiv.style("width", w*0.9);
+		topDiv.style("width", (w - 20));
 		ayahsAndVisualsDiv.style("width", vizDivW).style("max-height", vizDivH).style("height", vizDivH).style("overflow", "auto");
 		detailsDiv.style("width", detailDivW).style("height", vizDivH);
 		moreDetailsDiv.style("max-height", vizDivH).style("overflow", "auto");
