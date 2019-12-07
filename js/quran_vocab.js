@@ -1144,6 +1144,7 @@ function clickSBTouch(d){
 
 function clickSB(d){
 	wordDiv.selectAll("*").remove();
+	moreDetailsDiv.selectAll("*").remove();
 	goodNodes = [];
 	if(d.parent !== null){
 		goodNodes.push(d.parent.data.data.name);
