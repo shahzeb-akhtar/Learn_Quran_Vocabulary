@@ -743,9 +743,11 @@ function surahClickedTouch(d){
 		surahMouseOver(d);
 	}else{
 		let currTime = new Date();
-		alert(currTime - lastTouchClickTime);
+		if(lastTouchClickD === d){
+			alert(currTime - lastTouchClickTime);
+		}
+		
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
-			//alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
 			surahClicked(d);
 		}else{
 			surahMouseOver(d);
@@ -1682,12 +1684,10 @@ function wordClickTouch(d){
 	d3.event.preventDefault();
 	ayahsInnerDiv.selectAll("span").style("background-color",null);
 	if(!lastTouchClickD){
-		//alert("calling word mouse over");
 		wordMouseOver(d);
 	}else{
 		let currTime = new Date();
 		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
-			//alert("word mouse over", lastTouchClickD, currTime - lastTouchClickTime);
 			wordClick(d);
 		}else{
 			wordMouseOver(d);
@@ -1730,7 +1730,6 @@ function pauseMouseOut(){
 
 function wordMouseOver(d){
 	moreDetailsDiv.selectAll("*").remove();
-	//alert("wordMouseOver");
 	d3.select("#span_" + d).style("background-color","yellow");
 		
 	if(words[d][WORD_ARABIC_ROOT] != ""){
