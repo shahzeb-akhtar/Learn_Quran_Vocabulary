@@ -1278,7 +1278,6 @@ function rectMOut(d){
 }
 
 function _rectMOver(d){
-	alert(d.value);
 	if(disableRectMOver) return;
 	moreDetailsDiv.selectAll("*").remove();
 	if(d.type === "root_root"){
@@ -1331,8 +1330,10 @@ function _rectMOver(d){
 		});
 	}
 	if(d.type === "no_root_type"){
+		alert(d.value);
 		let newSvg = moreDetailsDiv.append("svg").attr("width", detailDivW - 25); // to allow for scroll bar
 		d3.selectAll(".no_root_type").style("opacity", function(dIn){
+			alert(dIn.value);
 			if(dIn.value === d.value){
 				return 1;
 			}else{
