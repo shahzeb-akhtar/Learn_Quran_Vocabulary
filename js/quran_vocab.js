@@ -840,7 +840,10 @@ function createNoRootViz(){
 							.datum({"type":"no_root_type", "value":t})
 							
 		if(isMobile){
-			gg.on("touchend", _rectMOver);
+			gg.on("touchend", function(d){
+				d3.event.preventDefault();
+				_rectMOver(d);
+			});
 		}else{
 			gg.on("mouseenter", rectMOver)
 				.on("mouseleave", rectMOut);
