@@ -1646,7 +1646,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 function wordClickTouch(d){
 	d3.event.preventDefault();
 	if(!lastTouchClickD){
-		alert("word mouse over");
+		alert("calling word mouse over");
 		wordMouseOver(d);
 	}else{
 		let currTime = new Date();
@@ -1694,6 +1694,7 @@ function pauseMouseOut(){
 
 function wordMouseOver(d){
 	moreDetailsDiv.selectAll("*").remove();
+	alert("wordMouseOver");
 	alert(this);
 	d3.select(this).style("background-color","yellow");
 		
