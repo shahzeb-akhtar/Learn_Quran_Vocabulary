@@ -1644,6 +1644,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function touchStartWord(d){
+	alert("word mouse over" + ", " + lastTouchClickD + ", " + lastTouchClickTime);
 	d3.event.preventDefault();
 	if(!lastTouchClickD){
 		alert("word mouse over");
@@ -1659,6 +1660,7 @@ function touchStartWord(d){
 	}
 	lastTouchClickD = d;
 	lastTouchClickTime = new Date();
+	alert("ending");
 }
 
 function wordClick(d){
