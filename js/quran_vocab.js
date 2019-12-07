@@ -56,6 +56,7 @@ const topDiv = d3.select("#top_div"),
 	radioSliceSizeFrequency = d3.select("#slice_size_frequency"),
 	radioSliceSizeUnique = d3.select("#slice_size_unique"),
 	ayahsDiv = d3.select("#ayahs_div"),
+	wordDiv = d3.select("#word_div"),
 	closeAyahButton = d3.select("#close_ayah_button"),
 	ayahsInnerDiv = d3.select("#ayahs_inner_div");
 
@@ -252,7 +253,8 @@ const textFits = function(d){
 					const perimeter = r * deltaAngle;
 					return perimeter >= 5;
 				};
-alert(mobileAndTabletcheck());
+				
+let isMobile = mobileAndTabletcheck();
 closeAyahButton.on("click",closeAyahsDiv);
 radioSliceSizeFrequency.on("click", sliceSizeTypeChanged);
 radioSliceSizeUnique.on("click", sliceSizeTypeChanged);
@@ -344,7 +346,7 @@ function resetWidths(){
 		treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
 		tree.size([2*Math.PI, treeRadius]);
 		ySB.range([0, treeRadius]);
-		topDiv.style("width", w*0.95);
+		topDiv.style("width", w*0.9);
 		ayahsAndVisualsDiv.style("width", vizDivW).style("max-height", vizDivH).style("height", vizDivH).style("overflow", "auto");
 		detailsDiv.style("width", detailDivW).style("height", vizDivH);
 		moreDetailsDiv.style("max-height", vizDivH).style("overflow", "auto");
@@ -565,6 +567,7 @@ function createTopChoices(){
 function topChoiceClicked(d){
 	_rectMOut();
 	closeAyahsDiv();
+	sbMOut();
 	selectedTopChoice = d[0];
 	d3.selectAll(".top_choice").style("stroke-width","0px");
 	d3.select("#top_rect_" + d[0].split(" ").join("_")).style("stroke-width","2px");
@@ -1353,7 +1356,13 @@ function _rectMOut(){
 function sbMOver(d){
 	if(disableSbMOver) return;
 	moreDetailsDiv.selectAll("*").remove();
-	
+	if(d.depth > 0 && d.depth < 3){
+		wordDiv.selectAll("*").remove();
+		appendP(wordDiv, {"size":descTitleSize * 2, "align":"center", "html":d.data.data.name, "family":"Arabic Typesetting"});
+		let ayahsAndVisualsDivPos = localToGlobal(ayahsAndVisualsDiv.node());
+		wordDiv.style("left",ayahsAndVisualsDivPos.left)
+				.style("top",ayahsAndVisualsDivPos.top - 40);		
+	}	
 	let arrToDraw = [], mx = 0;
 	let scale = d3.scaleLinear();
 	if(d.depth < 3){
@@ -1565,6 +1574,8 @@ function appendP(pElem, pObj){
 function sbMOut(){
 	if(disableSbMOver) return;
 	moreDetailsDiv.selectAll("*").remove();
+	wordDiv.selectAll("*").remove();
+	wordDiv.style("left","-1000px").style("top","-1000px");
 }
 
 function showAdditionalAyahs(ac, l){
@@ -1593,7 +1604,12 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 	
 	appendSpan(pEnglish, {"html":" "});
 	for(zz = 1; zz <= ayahWordNumsObj[obj.a]; zz++){
-		sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
+		if(isMobile){
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "click":touchWordClick});
+		}else{
+			sAra = appendSpan(pArabic, {"html":words[obj.a+"-"+zz][WORD_ARABIC] + " ", "datum":obj.a+"-"+zz, "mouseover":wordMouseOver, "mouseout":wordMouseOut, "click":wordClick});
+		}
+		
 		if(typeof pauseMarksObj[obj.a+"-"+zz] != "undefined"){
 			appendSpan(pArabic, {"color":textColor, "html":pauseMarksObj[obj.a+"-"+zz] + " ", "datum":pauseMarksObj[obj.a+"-"+zz]});
 			// , "mouseover":pauseMouseOver, "mouseout":pauseMouseOut
@@ -1623,6 +1639,10 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 			sEng.style("color",textColor);						
 		}
 	}			
+}
+
+function touchWordClick(d){
+	alert(d);
 }
 
 function wordClick(d){
