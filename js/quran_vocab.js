@@ -743,11 +743,8 @@ function surahClickedTouch(d){
 		surahMouseOver(d);
 	}else{
 		let currTime = new Date();
-		if(lastTouchClickD === d){
-			alert(currTime - lastTouchClickTime);
-		}
 		
-		if(lastTouchClickD === d && currTime - lastTouchClickTime < 500){
+		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
 			surahClicked(d);
 		}else{
 			surahMouseOver(d);
@@ -1048,10 +1045,14 @@ function createSB(d){
 		let pathG = sbG.append("g")
 						.datum(nd)
 						.attr("class", "slice")
-						.on("click", clickSB)
-						.on("mouseover", function(d){setTimeout(sbMOver, 500, d);})
-						.on("mouseout", function(d){setTimeout(sbMOut, 500, d);});
-		
+						
+		if(isMobile){
+			pathG.on("touchend", clickSB)
+		}else{
+			pathG.on("click", clickSB)
+				.on("mouseover", function(d){setTimeout(sbMOver, 500, d);})
+				.on("mouseout", function(d){setTimeout(sbMOut, 500, d);});
+		}
 		let mainArc = pathG.append('path')
 							.attr('class', 'main-arc')
 							.style('fill', function(){
@@ -1122,6 +1123,24 @@ function createSB(d){
 		}
 			
 	});	
+}
+
+function clickSBTouch(d){
+	d3.event.preventDefault();
+	if(!lastTouchClickD){
+		//alert("calling word mouse over");
+		sbMOver(d);
+	}else{
+		let currTime = new Date();
+		
+		if(lastTouchClickD === d && currTime - lastTouchClickTime < 750){
+			clickSB(d);
+		}else{
+			sbMOver(d);
+		}
+	}
+	lastTouchClickD = d;
+	lastTouchClickTime = new Date();
 }
 
 function clickSB(d){
