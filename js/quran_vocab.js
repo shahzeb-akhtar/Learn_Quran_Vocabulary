@@ -1735,7 +1735,7 @@ function showAyah(obj){ // a is ayah number, i is the index of ayah in displayed
 }
 
 function wordClickTouch(d){
-	ayahsInnerDiv.selectAll("span")style("background-color",null);
+	ayahsInnerDiv.selectAll("span").style("background-color",null);
 	touchEventHandler(d, wordMouseOver, wordClick);
 }
 
