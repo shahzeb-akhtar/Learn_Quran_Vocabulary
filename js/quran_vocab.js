@@ -1170,12 +1170,12 @@ function clickSBTouch(d){
 function clickSB(d){
 	wordDiv.selectAll("*").remove();
 	moreDetailsDiv.selectAll("*").remove();
-	rootsSvg.selectAll("*").remove();
 	goodNodes = [];
 	if(d.parent !== null){
 		goodNodes.push(d.parent.data.data.name);
 	}
 	if(d.children){
+		rootsSvg.selectAll("*").remove();
 		goodNodes.push(d.data.data.name);
 		d.children.forEach(function(dd){
 			goodNodes.push(dd.data.data.name);
