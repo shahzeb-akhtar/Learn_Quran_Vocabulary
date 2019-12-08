@@ -737,8 +737,9 @@ function prepareAyahsDiv(){
 }
 
 function surahClickedTouch(d){
-	
+	touchEventHandler(d, surahMouseOver, surahClicked);
 }
+
 function surahClicked(s){
 	moreDetailsDiv.selectAll("*").remove();
 	if(s.indexOf("-")<0){
