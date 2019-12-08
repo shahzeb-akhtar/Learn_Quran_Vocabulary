@@ -1004,7 +1004,7 @@ function createRootsHeatMap(){
 								.datum({"type":"root_root", "value":r, "root_value":r, "alphabet":a})
 								
 			if(isMobile){
-				gg.on("touchend", function(){
+				gg.on("touchend", function(d){
 					touchEventHandler(d, _rectMOver);
 				})
 			}else{
@@ -1295,8 +1295,8 @@ function rectMOut(d){
 
 function _rectMOver(d){
 	if(disableRectMOver) return;
-	moreDetailsDiv.selectAll("*").remove();
 	alert(d.type);
+	moreDetailsDiv.selectAll("*").remove();
 	if(d.type === "root_root"){
 		let newSvg = moreDetailsDiv.append("svg").attr("width", detailDivW - 25); // to allow for scroll bar
 		d3.selectAll(".root_root_" + d.alphabet).style("opacity", function(dIn){
