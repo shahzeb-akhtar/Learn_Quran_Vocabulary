@@ -883,6 +883,9 @@ function createNoRootViz(){
 function touchEventHandler(d, MOverHandler, MClickHandler){
 	d3.event.preventDefault();
 	d3.event.stopPropagation();
+	if(d.type === "root_root"){
+		alert("root root");
+	}
 	if(!lastTouchClickD || !MClickHandler){
 		//alert("calling word mouse over");
 		MOverHandler(d);
@@ -1295,9 +1298,10 @@ function rectMOut(d){
 
 function _rectMOver(d){
 	if(disableRectMOver) return;
-	alert(d.type);
+	
 	moreDetailsDiv.selectAll("*").remove();
 	if(d.type === "root_root"){
+		alert(d.type);
 		let newSvg = moreDetailsDiv.append("svg").attr("width", detailDivW - 25); // to allow for scroll bar
 		d3.selectAll(".root_root_" + d.alphabet).style("opacity", function(dIn){
 			if(dIn.root_value === d.root_value){
