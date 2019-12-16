@@ -334,11 +334,11 @@ window.onresize = function(){
 }
 
 function resetWidths(){
-	let h = window.visualViewport.height,
-		w = window.visualViewport.width;
-		vizDivW = w*0.73;
-		detailDivW = w*0.20;
-		vizDivH = (h - topDiv.node().clientHeight) * 0.95;
+	let h = window.visualViewport.height - 35, // to account for body padding
+		w = window.visualViewport.width - 35;
+		vizDivW = w*0.75;
+		detailDivW = w*0.23;
+		vizDivH = (h - topDiv.node().clientHeight);// * 0.95;
 		if(vizDivH < 200){
 			vizDivH = 200;
 		}
@@ -348,7 +348,7 @@ function resetWidths(){
 		treeRadius = d3.min([vizDivH, vizDivW])/2 - 5;
 		tree.size([2*Math.PI, treeRadius]);
 		ySB.range([0, treeRadius]);
-		topDiv.style("width", (w - 20));
+		topDiv.style("width", w);
 		ayahsAndVisualsDiv.style("width", vizDivW).style("max-height", vizDivH).style("height", vizDivH).style("overflow", "auto");
 		detailsDiv.style("width", detailDivW).style("height", vizDivH);
 		moreDetailsDiv.style("max-height", vizDivH).style("overflow", "auto");
@@ -1332,11 +1332,7 @@ function _rectMOver(d){
 		newSvg.attr("height", s + 20);
 	}
 	if(d.type === "root_word"){
-		let newDiv = moreDetailsDiv.append("div").attr("width", detailDivW - 25); // to allow for scroll bar
-		appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":d.value, "family":"Arabic Typesetting"});
-		appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(lemmaWithRootWordsObj[d.value][0].length), "align":"right"});
-		appendP(newDiv, {"size":descSize, "html":getMeaningHtml(rootMeaningsObj[d.value][0], descSize)});
-		appendP(newDiv, {"size":descSize * 0.75, "html":getMeaningHtml(rootMeaningsObj[d.value][1], descSize * 0.75)});
+		showMeaning(d.value);
 		d3.selectAll(".root_root_" + d.alphabet).style("opacity", function(dIn){
 			if(dIn.value === d.root_value || dIn.value === d.value){
 				return 1;
@@ -1473,11 +1469,119 @@ function sbMOver(d){
 		});
 		newSvg.attr("height", s + 20);
 	}else{
-		let newDiv = moreDetailsDiv.append("div").attr("width", detailDivW - 25); // to allow for scroll bar
-		appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":d.data.data.name, "family":"Arabic Typesetting"});
-		appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(lemmaWithRootWordsObj[d.data.data.name][0].length), "align":"right"});
-		appendP(newDiv, {"size":descSize, "html":getMeaningHtml(rootMeaningsObj[d.data.data.name][0], descSize)});
-		appendP(newDiv, {"size":descSize * 0.75, "html":getMeaningHtml(rootMeaningsObj[d.data.data.name][1], descSize * 0.75)});
+		showMeaning(d.data.data.name);
+	}
+}
+
+function showMeaning(lemma){
+	let newDiv = moreDetailsDiv.append("div").attr("width", detailDivW - 25); // to allow for scroll bar
+	appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":lemma, "family":"Arabic Typesetting"});
+	appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(lemmaWithRootWordsObj[lemma][0].length), "align":"right"});
+	appendP(newDiv, {"size":descSize, "html":getMeaningHtml(rootMeaningsObj[lemma][0], descSize)});
+	if(rootMeaningsObj[lemma][1].length > 0){
+		rootMeaningsObj[lemma][1].forEach(function(lm, li){
+			if(lm.hasOwnProperty('_v')){
+				let newTable = newDiv.append("table").append("tbody");
+				let newRow;
+				console.log(lm);
+				if(lm._v.hasOwnProperty('_3')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "3", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._v._3);
+				}
+				
+				if(lm._v.hasOwnProperty('_2')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "2", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._v._2);
+				}
+				if(lm._v.hasOwnProperty('_1')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "1", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._v._1);
+				}
+			}
+			if(lm.hasOwnProperty('_ov')){
+				appendP(newDiv, {"size":descSize, "html":"Other Form"});
+				let newTable = newDiv.append("table").append("tbody");
+				let newRow;
+				console.log(lm);
+				if(lm._ov.hasOwnProperty('_3')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "3", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._ov._3);
+				}
+				
+				if(lm._ov.hasOwnProperty('_2')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "2", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._ov._2);
+				}
+				if(lm._ov.hasOwnProperty('_1')){
+					newRow = newTable.append("tr");
+					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "1", "weight":"bold"});
+					appendSDP(newTable, newRow, true, lm._ov._1);
+				}
+			}
+			if(lm.hasOwnProperty('_n')){
+				let newTable = newDiv.append("table").append("tbody");
+				appendSDP(newTable, {}, false, lm._n);
+			}
+			if(lm.hasOwnProperty('_on')){
+				appendP(newDiv, {"size":descSize, "html":"Other Form"});
+				let newTable = newDiv.append("table").append("tbody");
+				appendSDP(newTable, {}, false, lm._n);
+			}
+			if(lm.hasOwnProperty('_m')){
+				appendP(newDiv, {"size":descSize * 0.75, "html":getMeaningHtml(lm._m, descSize * 0.75)});
+			}
+			
+		});
+	}
+	// SDP - Singular, Dual and Plural
+	function appendSDP(table, row, isVerb, sdpObj){
+		let apendedNums = 0;
+		function appendMeaning(spd, arabicWords){
+			let tempRow, tempTd;
+			if(isVerb){
+				apendedNums ++;
+				if(apendedNums > 1){
+					tempRow = table.append("tr");
+					tempRow.append("td");
+				}else{
+					tempRow = row;
+				}
+			}else{
+				tempRow = table.append("tr");
+			}
+			appendSpan(tempRow.append("td"), {"size":descSize * 0.75, "html": spd});
+			tempTd = tempRow.append("td");
+			arabicWords.forEach(function(w, i){
+				if(i > 0){
+					appendSpan(tempTd, {"size":descSize * 0.75, "html": ", "});
+				}
+				appendSpan(tempTd, {"size":descSize * 1.5, "html": w, "family": "Arabic Typesetting"});
+			});
+		}
+		if(sdpObj.hasOwnProperty('s')){
+			appendMeaning('S:', sdpObj.s);
+		}
+		if(sdpObj.hasOwnProperty('d')){
+			appendMeaning('D:', sdpObj.d);
+		}
+		if(sdpObj.hasOwnProperty('p')){
+			appendMeaning('P:', sdpObj.p);
+		}
+		if(sdpObj.hasOwnProperty('fs')){
+			appendMeaning('FS:', sdpObj.fs);
+		}
+		if(sdpObj.hasOwnProperty('fd')){
+			appendMeaning('FD:', sdpObj.fd);
+		}
+		if(sdpObj.hasOwnProperty('fp')){
+			appendMeaning('FP:', sdpObj.fp);
+		}
+		
 	}
 }
 
@@ -1597,6 +1701,9 @@ function appendSpan(sElem, sObj){
 	}
 	if(sObj.size){
 		ss.style("font-size", sObj.size);
+	}
+	if(sObj.weight){
+		ss.style("font-weight", sObj.weight);
 	}
 	if(sObj.family){
 		ss.style("font-family", sObj.family);
