@@ -1332,7 +1332,7 @@ function _rectMOver(d){
 		newSvg.attr("height", s + 20);
 	}
 	if(d.type === "root_word"){
-		showMeaning(d.value);
+		showMeaning(d.value, lemmaWithRootWordsObj[d.value][0].length, rootMeaningsObj[d.value]);
 		d3.selectAll(".root_root_" + d.alphabet).style("opacity", function(dIn){
 			if(dIn.value === d.root_value || dIn.value === d.value){
 				return 1;
@@ -1383,11 +1383,7 @@ function _rectMOver(d){
 		newSvg.attr("height", s + 20);
 	}
 	if(d.type === "no_root_lemma"){
-		let newDiv = moreDetailsDiv.append("div").attr("width", detailDivW - 25); // to allow for scroll bar
-		appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":d.value, "family":"Arabic Typesetting"});
-		appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(noRootLemmasCount[d.value]), "align":"right"});
-		appendP(newDiv, {"size":descSize, "html":getMeaningHtml(noRootMeaningsObj[d.value][0], descSize)});
-		appendP(newDiv, {"size":descSize * 0.75, "html":getMeaningHtml(noRootMeaningsObj[d.value][1], descSize * 0.75)});
+		showMeaning(d.value, noRootLemmasCount[d.value], noRootMeaningsObj[d.value]);
 		d3.selectAll(".no_root_lemma").style("opacity", function(dIn){
 			if(dIn.value === d.value){
 				return 1;
@@ -1469,21 +1465,20 @@ function sbMOver(d){
 		});
 		newSvg.attr("height", s + 20);
 	}else{
-		showMeaning(d.data.data.name);
+		showMeaning(d.data.data.name, lemmaWithRootWordsObj[d.data.data.name][0].length, rootMeaningsObj[d.data.data.name]);
 	}
 }
 
-function showMeaning(lemma){
+function showMeaning(word, count, meaning){
 	let newDiv = moreDetailsDiv.append("div").attr("width", detailDivW - 25); // to allow for scroll bar
-	appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":lemma, "family":"Arabic Typesetting"});
-	appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(lemmaWithRootWordsObj[lemma][0].length), "align":"right"});
-	appendP(newDiv, {"size":descSize, "html":getMeaningHtml(rootMeaningsObj[lemma][0], descSize)});
-	if(rootMeaningsObj[lemma][1].length > 0){
-		rootMeaningsObj[lemma][1].forEach(function(lm, li){
+	appendP(newDiv, {"size":descTitleSize * 2, "align":"center", "html":word, "family":"Arabic Typesetting"});
+	appendP(newDiv, {"size":descSize * 0.75, "html":formatNumber(count), "align":"right"});
+	appendP(newDiv, {"size":descSize, "html":getMeaningHtml(meaning[0], descSize)});
+	if(meaning[1].length > 0){
+		meaning[1].forEach(function(lm, li){
 			if(lm.hasOwnProperty('_v')){
 				let newTable = newDiv.append("table").append("tbody");
 				let newRow;
-				console.log(lm);
 				if(lm._v.hasOwnProperty('_3')){
 					newRow = newTable.append("tr");
 					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "3", "weight":"bold"});
@@ -1505,7 +1500,6 @@ function showMeaning(lemma){
 				appendP(newDiv, {"size":descSize, "html":"Other Form"});
 				let newTable = newDiv.append("table").append("tbody");
 				let newRow;
-				console.log(lm);
 				if(lm._ov.hasOwnProperty('_3')){
 					newRow = newTable.append("tr");
 					appendSpan(newRow.append("td"), {"size":descSize * 0.75, "html": "3", "weight":"bold"});
