@@ -49,8 +49,7 @@ Given JSON array of object with the following properties, it creates an interact
 ```
 
 <h2 id="head4"> Usage </h2>
-Learn Quran Vocabulary
-[![Alt text](https://img.youtube.com/vi/5mgzwQ0c8dc/0.jpg)](https://www.youtube.com/watch?v=5mgzwQ0c8dc)
+Watch video at: https://www.youtube.com/watch?v=5mgzwQ0c8dc
 
 <h2 id="head5"> Author </h2>
 Shahzeb Akhtar
