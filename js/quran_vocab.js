@@ -548,7 +548,7 @@ function createTopChoices(){
 	let topTableRow = topDiv.append("table").attr("width","100%").append("tbody").append("tr");
 	topTableRow.append("td").attr("width", "10%");
 	let td = topTableRow.append("td").attr("width", "80%").style("text-align","center");
-	surahRootNoRootSvg = td.append("svg").attr("width",500).attr("height",50);
+	surahRootNoRootSvg = td.append("svg").attr("width",600).attr("height",50);
 	topChoices.forEach(function(tc,ti){
 		gg = surahRootNoRootSvg.append("g")
 								.attr("transform","translate(" + (175*ti + 5) + ",10)")
