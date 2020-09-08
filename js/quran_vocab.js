@@ -551,12 +551,12 @@ function createTopChoices(){
 	surahRootNoRootSvg = td.append("svg").attr("width",450).attr("height",50);
 	topChoices.forEach(function(tc,ti){
 		gg = surahRootNoRootSvg.append("g")
-								.attr("transform","translate(" + (150*ti + 5) + ",10)")
+								.attr("transform","translate(" + (175*ti + 5) + ",10)")
 								.datum([tc,""])
 								.on("click",topChoiceClicked);
 		
-		appendRect(gg, {"width":142.5, "height":30, "rx":5, "class":"top_choice", "id":("top_rect_" + tc.split(" ").join("_")), "stroke":"black", "strokeWidth":"0px", "fill":grayColor});
-		appendText(gg, {"x":71.25, "y":20, "class":"noselect", "anchor":"middle", "size":TOP_CHOICE_TEXT_SIZE, "text":tc});
+		appendRect(gg, {"width":162.5, "height":30, "rx":5, "class":"top_choice", "id":("top_rect_" + tc.split(" ").join("_")), "stroke":"black", "strokeWidth":"0px", "fill":grayColor});
+		appendText(gg, {"x":81.25, "y":20, "class":"noselect", "anchor":"middle", "size":TOP_CHOICE_TEXT_SIZE, "text":tc});
 	});
 	td = topTableRow.append("td").attr("width", "10%").style("text-align","right");
 	buttonShowMoreOptions = td.append("button")
